@@ -1,7 +1,7 @@
 const express = require('express')
 
 const User = require('../models/User')
-const authentication = require('../middlewares/isAuthenticated')
+const isAuthenticated = require('../middlewares/isAuthenticated')
 
 const router = express.Router()
 
@@ -28,7 +28,7 @@ router.post('/login', async (req, res, next) => {
       req.session.password = password
       res.send(`The user with username ${username} has been logged in!`)
     } else {
-      res.send(`The user does not exists!`)
+      res.send(`The user does not exists or the password may be incorrect!`)
     }
   } catch (error) {
     next(new Error(`Error inside /login with error message: ${error}`))
@@ -36,7 +36,7 @@ router.post('/login', async (req, res, next) => {
 })
 
 // logs a user out if they are logged in
-router.post('/logout', authentication, async (req, res, next) => {
+router.post('/logout', isAuthenticated, (req, res, next) => {
   const { session } = req
   const { username } = session
   req.session.username = undefined
@@ -44,6 +44,4 @@ router.post('/logout', authentication, async (req, res, next) => {
   res.send(`The user with username "${username}" has been logged out!`)
 })
 
-module.exports = {
-  router,
-}
+module.exports = router

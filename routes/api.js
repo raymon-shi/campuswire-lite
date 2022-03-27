@@ -1,7 +1,7 @@
 const express = require('express')
 
 const Question = require('../models/Question')
-const authentication = require('../middlewares/isAuthenticated')
+const isAuthenticated = require('../middlewares/isAuthenticated')
 
 const router = express.Router()
 
@@ -20,21 +20,21 @@ router.get('/questions', async (req, res, next) => {
 })
 
 // creates a new question with questionText and author
-router.post('/questions/add', authentication, async (req, res, next) => {
+router.post('/questions/add', isAuthenticated, async (req, res, next) => {
   const { body, session } = req
   const { questionText } = body
   const { username } = session
 
   try {
-    const addedQuestion = await Question.create({ questionText, author: username })
-    res.send(`The question with id "${addedQuestion._id}" has been created!`)
+    const addedQuestion = await Question.create({ question: questionText, author: username })
+    res.send(`The question with id "${addedQuestion._id}" has been created by ${username}!`)
   } catch (error) {
     next(new Error(`Error inside /questions/add with error message: ${error}`))
   }
 })
 
 // updates the answer to a question
-router.post('/questions/answer', authentication, async (req, res, next) => {
+router.post('/questions/answer', isAuthenticated, async (req, res, next) => {
   const { body } = req
   const { _id, answer } = body
 
@@ -45,3 +45,5 @@ router.post('/questions/answer', authentication, async (req, res, next) => {
     next(new Error(`Error inside /questions/answer with error message: ${error}`))
   }
 })
+
+module.exports = router

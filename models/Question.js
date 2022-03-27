@@ -11,6 +11,4 @@ const questionSchema = new Schema({
 
 const Question = model('Question', questionSchema)
 
-module.exports = {
-  Question,
-}
+module.exports = Question

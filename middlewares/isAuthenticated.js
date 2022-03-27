@@ -8,6 +8,4 @@ const isAuthenticated = (req, res, next) => {
   }
 }
 
-module.exports = {
-  isAuthenticated,
-}
+module.exports = isAuthenticated

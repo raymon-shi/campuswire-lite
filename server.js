@@ -5,7 +5,7 @@ const cookieSession = require('cookie-session')
 
 const mongoose = require('mongoose')
 
-const authenticaiton = require('./middlewares/isAuthenticated')
+const isAuthenticated = require('./middlewares/isAuthenticated')
 const accountRouter = require('./routes/account')
 const apiRouter = require('./routes/api')
 
@@ -19,24 +19,25 @@ mongoose.connect(MONGO_URI, {
   useUnifiedTopology: true,
 })
 
+app.use(express.json())
+
 // session
 app.use(
   cookieSession({
     name: 'session',
+    keys: ['secret-key'],
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   }),
 )
 
-app.use(authenticaiton)
+// routers
+app.use('/account', accountRouter)
+app.use('/api', apiRouter)
 
 // default error handling
 app.use((err, req, res, next) => {
   res.status(500).send(`There was an error with error message: ${err}!`)
 })
-
-// routers
-app.use('/account', accountRouter)
-app.use('/api', apiRouter)
 
 app.listen(port, () => {
   console.log(`Listening to port: ${port}`)
