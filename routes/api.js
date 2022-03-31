@@ -10,7 +10,7 @@ router.get('/questions', async (req, res, next) => {
   try {
     const questions = await Question.find()
     if (questions) {
-      res.send(`All of the existing questions have been retrieved!`)
+      res.send(questions)
     } else {
       res.send(`There are no existing questions!`)
     }
