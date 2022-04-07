@@ -25,7 +25,6 @@ router.post('/login', async (req, res, next) => {
     const user = await User.findOne({ username, password })
     if (user) {
       req.session.username = username
-      req.session.password = password
       res.send(user)
     } else {
       next(new Error('The user does not exists or the password may be incorrect!'))
@@ -40,8 +39,14 @@ router.post('/logout', isAuthenticated, (req, res, next) => {
   const { session } = req
   const { username } = session
   req.session.username = undefined
-  req.session.password = undefined
   res.send(`The user with username "${username}" has been logged out!`)
+})
+
+// get user information
+router.get('/user', (req, res, next) => {
+  const { session } = req
+  const { username } = session
+  res.send({ username })
 })
 
 module.exports = router
