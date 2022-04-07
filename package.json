@@ -1,22 +1,29 @@
 {
-  "name": "backend",
+  "name": "campuswire-lite",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "build": "parcel frontend/src/index.html", 
+    "server": "nodemon backend/server.js",
+    "dev": "concurrently --kill-others \"npm run build\" \"npm run server\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/eslint": "^6.1.1",
+    "axios": "^0.26.1",
     "babel-eslint": "^10.1.0",
+    "concurrently": "^7.1.0",
     "cookie-session": "^2.0.0",
     "eslint-config-airbnb": "^18.2.0",
     "express": "^4.17.3",
-    "mongoose": "^6.2.8"
+    "mongoose": "^6.2.8",
+    "parcel": "^2.4.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
