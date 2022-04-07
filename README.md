@@ -21,5 +21,6 @@ A light clone of the Campuswire forum using the MERN stack
 ### How To Run
 ```
 git clone
+npm install
 npm run dev
 ```
