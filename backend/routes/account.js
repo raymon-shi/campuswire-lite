@@ -26,9 +26,9 @@ router.post('/login', async (req, res, next) => {
     if (user) {
       req.session.username = username
       req.session.password = password
-      res.send(`The user with username ${username} has been logged in!`)
+      res.send(user)
     } else {
-      res.send(`The user does not exists or the password may be incorrect!`)
+      next(new Error('The user does not exists or the password may be incorrect!'))
     }
   } catch (error) {
     next(new Error(`Error inside /login with error message: ${error}`))
