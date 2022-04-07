@@ -7,6 +7,7 @@ const questionSchema = new Schema({
   question: { type: String, required: true },
   answer: { type: String },
   author: { type: String, required: true },
+  answeredBy: { type: String },
 })
 
 const Question = model('Question', questionSchema)

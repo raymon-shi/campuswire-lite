@@ -27,7 +27,7 @@ router.post('/questions/add', isAuthenticated, async (req, res, next) => {
 
   try {
     const addedQuestion = await Question.create({ question: questionText, author: username })
-    res.send(`The question with id "${addedQuestion._id}" has been created by ${username}!`)
+    res.send(addedQuestion)
   } catch (error) {
     next(new Error(`Error inside /questions/add with error message: ${error}`))
   }
@@ -39,8 +39,8 @@ router.post('/questions/answer', isAuthenticated, async (req, res, next) => {
   const { _id, answer } = body
 
   try {
-    await Question.updateOne({ _id }, { answer })
-    res.send(`The question with id "${_id}" has been answered!`)
+    const updatedQuestion = await Question.updateOne({ _id }, { answer })
+    res.send(updatedQuestion)
   } catch (error) {
     next(new Error(`Error inside /questions/answer with error message: ${error}`))
   }

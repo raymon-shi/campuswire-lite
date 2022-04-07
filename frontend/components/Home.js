@@ -4,10 +4,13 @@ import {
   Container, Button, Row, Col,
 } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
+import QuestionAddForm from './QuestionAddForm'
+import QuestionList from './QuestionList'
 
 const Home = () => {
   const [username, setUsername] = useState('')
   const [logged, setLogged] = useState(false)
+  const [questionModal, setQuestionModal] = useState(false)
 
   const navigate = useNavigate()
 
@@ -37,7 +40,11 @@ const Home = () => {
           <Link style={{ float: 'right' }} className="text-muted" to="login" onClick={logout}>Log out?</Link>
         </Col>
       </Row>
-      <Button>Add new Question +</Button>
+      <Button style={{ background: '#01E8C2', border: 'none' }} onClick={() => setQuestionModal(true)}>Add new Question +</Button>
+      {questionModal ? <QuestionAddForm questionModal={questionModal} setQuestionModal={setQuestionModal} /> : null}
+      <Row>
+        <QuestionList logged={logged} />
+      </Row>
     </Container>
   )
 
@@ -48,7 +55,10 @@ const Home = () => {
           <h1>Campuswire Lite</h1>
         </Col>
       </Row>
-      <Button onClick={() => navigate('/login')}>Log in to submit a question</Button>
+      <Button style={{ background: '#01E8C2', border: 'none' }} onClick={() => navigate('/login')}>Log in to submit a question</Button>
+      <Row>
+        <QuestionList logged={logged} />
+      </Row>
     </Container>
   )
 
@@ -59,6 +69,7 @@ const Home = () => {
   return (
     <Container>
       {logged ? loggedInView() : loggedOutView()}
+
     </Container>
   )
 }
