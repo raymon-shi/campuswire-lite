@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import {
   Button, Container, Tab, Card, Form,
 } from 'react-bootstrap'
@@ -9,9 +10,13 @@ const Question = ({
 }) => {
   const [newAnswer, setNewAnswer] = useState('')
   const answerQuestion = async () => {
-    const { data } = await axios.post('/api/questions/answer', { answer: newAnswer, _id: id })
-    if (data.answer) {
-      questionList()
+    try {
+      const { data } = await axios.post('/api/questions/answer', { answer: newAnswer, _id: id })
+      if (data.answer) {
+        questionList()
+      }
+    } catch (error) {
+      alert('There was an error trying to answer the question')
     }
   }
   return (
@@ -55,7 +60,6 @@ const Question = ({
 
           </Form>
         ) : null}
-
       </Container>
     </Tab.Pane>
 

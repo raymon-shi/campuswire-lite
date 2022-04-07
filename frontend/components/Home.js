@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import {
@@ -15,15 +16,23 @@ const Home = () => {
   const navigate = useNavigate()
 
   const loggedIn = async () => {
-    const { data } = await axios.get('/account/user')
-    if (data.username) {
-      setLogged(true)
-      setUsername(data.username)
+    try {
+      const { data } = await axios.get('/account/user')
+      if (data.username) {
+        setLogged(true)
+        setUsername(data.username)
+      }
+    } catch (error) {
+      alert('There was an error getting the user user!')
     }
   }
 
   const logout = async () => {
-    await axios.post('/account/logout')
+    try {
+      await axios.post('/account/logout')
+    } catch (error) {
+      alert('There was an error logging out!')
+    }
   }
 
   const loggedInView = () => (
@@ -69,7 +78,6 @@ const Home = () => {
   return (
     <Container>
       {logged ? loggedInView() : loggedOutView()}
-
     </Container>
   )
 }

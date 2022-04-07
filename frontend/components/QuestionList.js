@@ -8,7 +8,6 @@ import Question from './Question'
 
 const QuestionList = ({ logged }) => {
   const [user, setUser] = useState()
-  const [questionsError, setQuestionsError] = useState('')
   const [questions, setQuestions] = useState([])
 
   const questionList = async () => {
@@ -16,7 +15,6 @@ const QuestionList = ({ logged }) => {
       const { data } = await axios.get('/api/questions')
       setQuestions(data.reverse())
     } catch (error) {
-      setQuestionsError('There was an error getting questions!')
       alert('There was an error getting questions!')
     }
   }
@@ -28,8 +26,6 @@ const QuestionList = ({ logged }) => {
     }, 2000)
     return () => clearInterval(intervalID)
   }, [])
-
-  // {questions.map(question => <Question variant="outline-primary" className="w-25 mt-3" key={question._id} text={question.question} author={question.author} answer={question.answer} />)}
 
   return (
     <Container style={{ display: 'flex', flexDirection: 'column' }}>

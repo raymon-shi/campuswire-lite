@@ -7,15 +7,11 @@ import {
 
 const QuestionAddForm = ({ questionModal, setQuestionModal }) => {
   const [questionText, setQuestionText] = useState('')
-  const [author, setAuthor] = useState('')
-  const [ID, setID] = useState('')
-  const [questionError, setQuestionError] = useState('')
 
   const questionAdd = async () => {
     try {
       const { data } = await axios.post('/api/questions/add', { questionText })
     } catch (error) {
-      setQuestionError('There was an error with adding a new question')
       alert('There was an error with adding a new question!')
     }
   }

@@ -15,10 +15,10 @@ const Signup = () => {
 
   const signup = async () => {
     try {
-      const { data } = await axios.post('/account/signup', { username, password })
-      if (data) {
-        navigate('/')
-      }
+      await Promise.all([
+        await axios.post('/account/signup', { username, password }),
+        await axios.post('/account/login', { username, password }),
+      ]).then(() => navigate('/'))
     } catch (error) {
       setSignupError('User creation was unsuccessful! Username already in use!')
       alert('User creation was unsuccessful! Username already in use!')
