@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-alert */
 import React, { useState } from 'react'
 import {
   Container, Form, Button, Alert,
@@ -21,6 +21,7 @@ const Login = () => {
       }
     } catch (error) {
       setLoginError('You were unable to login. Check your username and password!')
+      alert('You were unable to login. Check your username and password!')
     }
   }
 
@@ -41,7 +42,7 @@ const Login = () => {
           Login
         </Button>
         <Form.Text className="text-muted">
-          Don't have an account?
+          Dont have an account?
           {' '}
           <Link to="/signup">Sign up!</Link>
         </Form.Text>
